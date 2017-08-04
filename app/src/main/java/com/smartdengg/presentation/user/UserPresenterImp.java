@@ -1,7 +1,8 @@
 package com.smartdengg.presentation.user;
 
+import architecture.domain.UseCase;
 import architecture.domain.WebServiceException;
-import architecture.domain.entity.UserEntity;
+import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.interactor.UserUseCase;
 import architecture.model.service.UserService;
 import java.util.List;
@@ -13,21 +14,23 @@ import rx.Subscriber;
  * 作者:  SmartDengg <br>
  * 描述:
  */
-public class UserPresenterImp implements UserContract.Presenter<List<UserEntity>> {
+public class UserPresenterImp
+    implements UserContract.Presenter<UserUseCase.Request, List<UserDetailEntity>> {
 
-  private UserContract.View<List<UserEntity>> view;
+  private UserContract.View<List<UserDetailEntity>> view;
 
-  private UserUseCase userUseCase;
+  private UseCase<UserUseCase.Request, List<UserDetailEntity>> userUseCase;
 
-  static UserContract.Presenter<List<UserEntity>> create() {
+  static UserContract.Presenter<UserUseCase.Request, List<UserDetailEntity>> create() {
     return new UserPresenterImp();
   }
 
   private UserPresenterImp() {
-    this.userUseCase = new UserUseCase(UserService.create());
+    final UserService userRepository = UserService.create();
+    this.userUseCase = new UserUseCase(userRepository);
   }
 
-  @Override public void attachView(UserContract.View<List<UserEntity>> view) {
+  @Override public void attachView(UserContract.View<List<UserDetailEntity>> view) {
     this.view = view;
   }
 
@@ -35,12 +38,11 @@ public class UserPresenterImp implements UserContract.Presenter<List<UserEntity>
     userUseCase.unsubscribe();
   }
 
-  @Override public void loadData(String key) {
-    final UserUseCase.Request request = UserUseCase.Request.createWithKey(key);
+  @Override public void loadData(UserUseCase.Request request) {
     userUseCase.subscribe(request, new InnerSubscriber());
   }
 
-  private final class InnerSubscriber extends Subscriber<List<UserEntity>> {
+  private final class InnerSubscriber extends Subscriber<List<UserDetailEntity>> {
 
     @Override public void onStart() {
       view.showProgress();
@@ -54,11 +56,11 @@ public class UserPresenterImp implements UserContract.Presenter<List<UserEntity>
       if (e instanceof WebServiceException) {
         view.showError(e.getMessage());
       } else {
-        view.showError("bala bala...");
+        view.showError("error :(");
       }
     }
 
-    @Override public void onNext(List<UserEntity> userEntities) {
+    @Override public void onNext(List<UserDetailEntity> userEntities) {
       view.showData(Observable.just(userEntities));
     }
   }

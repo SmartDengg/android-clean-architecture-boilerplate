@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/domian" />
             <option value="$PROJECT_DIR$/model" />
-            <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -10,11 +10,11 @@ import com.smartdengg.presentation.MVPView;
  */
 interface UserContract {
 
-  interface Presenter<T> extends MVPPresenter<View<T>> {
-    void loadData(String key);
+  interface Presenter<Request, Result> extends MVPPresenter<View<Result>> {
+    void loadData(Request request);
   }
 
-  interface View<T> extends MVPView<T> {
+  interface View<Result> extends MVPView<Result> {
 
     void showProgress();
   }

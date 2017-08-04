@@ -11,7 +11,7 @@ import rx.subscriptions.CompositeSubscription;
  * 作者:  SmartDengg <br>
  * 描述:
  */
-public abstract class UseCase<Request, Response> {
+public abstract class UseCase<Request extends KeyRequest, Response> {
 
   private CompositeSubscription subscriptions = new CompositeSubscription();
 

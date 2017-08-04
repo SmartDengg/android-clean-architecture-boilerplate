@@ -1,7 +1,8 @@
 package architecture.domain.interactor;
 
+import architecture.domain.KeyRequest;
 import architecture.domain.UseCase;
-import architecture.domain.entity.UserEntity;
+import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.repository.UserRepository;
 import architecture.domain.response.UserDetailResponse;
 import architecture.domain.response.UserIdsResponse;
@@ -15,7 +16,7 @@ import rx.functions.Func1;
  * 作者:  SmartDengg <br>
  * 描述:
  */
-public class UserUseCase extends UseCase<UserUseCase.Request, List<UserEntity>> {
+public class UserUseCase extends UseCase<UserUseCase.Request, List<UserDetailEntity>> {
 
   private UserRepository userRepository;
 
@@ -23,7 +24,7 @@ public class UserUseCase extends UseCase<UserUseCase.Request, List<UserEntity>> 
     this.userRepository = userRepository;
   }
 
-  @Override protected Observable<List<UserEntity>> interactor(UserUseCase.Request request) {
+  @Override protected Observable<List<UserDetailEntity>> interactor(UserUseCase.Request request) {
     return userRepository.getUserResponse(request)
         .concatMap(new Func1<UserIdsResponse, Observable<Integer>>() {
           @Override public Observable<Integer> call(UserIdsResponse userIdsResponse) {
@@ -35,35 +36,36 @@ public class UserUseCase extends UseCase<UserUseCase.Request, List<UserEntity>> 
             return userRepository.getDetailResponse(Request.createWithId(id));
           }
         })
-        .concatMap(new Func1<List<UserDetailResponse>, Observable<? extends List<UserEntity>>>() {
-          @Override public Observable<? extends List<UserEntity>> call(
-              List<UserDetailResponse> userDetailResponses) {
-            List<UserEntity> userEntities = new ArrayList<>(userDetailResponses.size());
-            for (UserDetailResponse detailResponse : userDetailResponses) {
-              UserEntity userEntity = new UserEntity();
-              userEntity.name = detailResponse.name;
-              userEntity.address = detailResponse.address;
-              userEntities.add(userEntity);
-            }
-            return Observable.just(userEntities);
-          }
-        });
+        .concatMap(
+            new Func1<List<UserDetailResponse>, Observable<? extends List<UserDetailEntity>>>() {
+              @Override public Observable<? extends List<UserDetailEntity>> call(
+                  List<UserDetailResponse> userDetailResponses) {
+                List<UserDetailEntity> userEntities = new ArrayList<>(userDetailResponses.size());
+                for (UserDetailResponse detailResponse : userDetailResponses) {
+                  UserDetailEntity userDetailEntity = new UserDetailEntity();
+                  userDetailEntity.name = detailResponse.name;
+                  userDetailEntity.address = detailResponse.address;
+                  userEntities.add(userDetailEntity);
+                }
+                return Observable.just(userEntities);
+              }
+            });
   }
 
-  public static class Request {
+  public static class Request extends KeyRequest {
 
     public int id;
     public String key;
 
-    public Request(int id) {
+    Request(int id) {
       this.id = id;
     }
 
-    public Request(String key) {
-      this.key = key;
+    Request(String key) {
+      super(key);
     }
 
-    public static Request createWithId(int id) {
+    static Request createWithId(int id) {
       return new Request(id);
     }
 

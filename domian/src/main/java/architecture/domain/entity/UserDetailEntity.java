@@ -5,7 +5,7 @@ package architecture.domain.entity;
  * 作者:  SmartDengg <br>
  * 描述:
  */
-public class UserEntity {
+public class UserDetailEntity {
 
   public String name;
 
