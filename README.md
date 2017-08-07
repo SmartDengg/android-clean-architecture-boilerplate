@@ -1,4 +1,4 @@
-PerformanceCleanArchitecture
+EasyAndroidCleanArchitecture
 -------------
 
 I wrote a blog to share my valuable experience in building a clean architecture. 
