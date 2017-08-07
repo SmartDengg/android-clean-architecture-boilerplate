@@ -1,6 +1,8 @@
 EasyAndroidCleanArchitecture
 -------------
 
+![](http://upload-images.jianshu.io/upload_images/268450-05e4b56e3a54d170.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 I wrote a blog to share my valuable experience in building a clean architecture. 
 In this process I keep exploring, trying and reading a lot of articles, 
 but the Android development ecosystem is developing so rapidly, 
@@ -16,36 +18,29 @@ It does not run independently, it's just a code example, so you have to understa
 Blog address on the jianshu: [《Clean architecture on Android》](s).
 
 
-
 [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 -------------
 ![Clean Architecture](http://upload-images.jianshu.io/upload_images/268450-8d4fe38caa574189.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 
-Android Clean Architecture modules
+Technical points
 -------------
 ![Android Clean architecture modules](http://upload-images.jianshu.io/upload_images/268450-85bbb35b7a68f931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-
-Android Clean architecture structure
--------------
 ![Android Clean architecture structure](http://upload-images.jianshu.io/upload_images/268450-eac22cae6f8ab4b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-
-Android Clean architecture data stream
--------------
 ![Android Clean architecture data stream](http://upload-images.jianshu.io/upload_images/268450-a1bb51d5425f7fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-
-Android Clean architecture UML
--------------
 ![Android Clean architecture UML](http://upload-images.jianshu.io/upload_images/268450-9ef0e97854311f9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
+Found this project useful
+-------
+<p align="center">:heart: Hope this article can help you. Support by clicking the :star:, or share it with people around you. :heart:  </p>
 
 
 ## About me：
