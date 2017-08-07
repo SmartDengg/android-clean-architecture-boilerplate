@@ -1,8 +1,29 @@
+import com.android.build.gradle.internal.LoggerWrapper
+import com.android.build.gradle.internal.SdkHandler
+
 apply plugin: 'java'
+
+def logger = new LoggerWrapper(project.logger)
+def sdkHandler = new SdkHandler(project, logger)
+for (File file : sdkHandler.sdkLoader.repositories) {
+  project.repositories.maven {
+    url = file.toURI()
+  }
+}
+
+repositories {
+  jcenter()
+  // Work around https://code.google.com/p/android/issues/detail?id=69270.
+  def androidHome = System.getenv("ANDROID_HOME")
+  maven {
+    url "$androidHome/extras/android/m2repository/"
+  }
+}
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile 'io.reactivex:rxjava:1.1.8'
+  compile 'io.reactivex.rxjava2:rxjava:2.1.2'
+  compileOnly 'com.android.support:support-annotations:25.3.1'
 }
 
 sourceCompatibility = "1.7"

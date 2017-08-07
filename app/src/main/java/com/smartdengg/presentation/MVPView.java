@@ -1,6 +1,6 @@
 package com.smartdengg.presentation;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 /**
  * 创建时间: 2017/06/19 22:53 <br>
@@ -9,7 +9,7 @@ import rx.Observable;
  */
 public interface MVPView<T> {
 
-  void showData(Observable<T> data);
+  void showData(Flowable<T> data);
 
   void showError(String errorMessage);
 }

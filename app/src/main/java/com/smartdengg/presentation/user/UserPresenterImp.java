@@ -5,9 +5,10 @@ import architecture.domain.WebServiceException;
 import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.interactor.UserUseCase;
 import architecture.model.service.UserService;
+import com.smartdengg.presentation.IoExecutor;
+import io.reactivex.Flowable;
+import io.reactivex.subscribers.DisposableSubscriber;
 import java.util.List;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * 创建时间:  2017/06/19 22:52 <br>
@@ -26,8 +27,10 @@ public class UserPresenterImp
   }
 
   private UserPresenterImp() {
+
     final UserService userRepository = UserService.create();
-    this.userUseCase = new UserUseCase(userRepository);
+    final UserUseCase.Executor<List<UserDetailEntity>> executor = IoExecutor.create();
+    this.userUseCase = new UserUseCase(userRepository, executor);
   }
 
   @Override public void attachView(UserContract.View<List<UserDetailEntity>> view) {
@@ -38,30 +41,29 @@ public class UserPresenterImp
     userUseCase.unsubscribe();
   }
 
-  @Override public void loadData(UserUseCase.Request request) {
+  @Override public void fetchData(UserUseCase.Request request) {
     userUseCase.subscribe(request, new InnerSubscriber());
   }
 
-  private final class InnerSubscriber extends Subscriber<List<UserDetailEntity>> {
+  private final class InnerSubscriber extends DisposableSubscriber<List<UserDetailEntity>> {
 
     @Override public void onStart() {
       view.showProgress();
-    }
-
-    @Override public void onCompleted() {
-
     }
 
     @Override public void onError(Throwable e) {
       if (e instanceof WebServiceException) {
         view.showError(e.getMessage());
       } else {
-        view.showError("error :(");
+        view.showError("error......");
       }
     }
 
+    @Override public void onComplete() {
+    }
+
     @Override public void onNext(List<UserDetailEntity> userEntities) {
-      view.showData(Observable.just(userEntities));
+      view.showData(Flowable.just(userEntities));
     }
   }
 }

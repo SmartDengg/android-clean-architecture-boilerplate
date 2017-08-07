@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    this.presenter.loadData(UserUseCase.Request.createWithKey("this is the access key"));
+    this.presenter.fetchData(UserUseCase.Request.createWithKey("this is the access key"));
   }
 
   @Override public void showData(Observable<List<UserDetailEntity>> data) {

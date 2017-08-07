@@ -1,6 +1,6 @@
 package architecture.domain.response.base;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 /**
  * 创建时间:  2017/06/19 19:16 <br>
@@ -15,5 +15,5 @@ public abstract class BaseResponse<T> {
   protected Integer error_code;
   protected T data;
 
-  public abstract Observable<T> filterWebServiceErrors();
+  public abstract Flowable<T> filterWebServiceErrors();
 }

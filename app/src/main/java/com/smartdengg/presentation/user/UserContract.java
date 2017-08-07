@@ -11,7 +11,7 @@ import com.smartdengg.presentation.MVPView;
 interface UserContract {
 
   interface Presenter<Request, Result> extends MVPPresenter<View<Result>> {
-    void loadData(Request request);
+    void fetchData(Request request);
   }
 
   interface View<Result> extends MVPView<Result> {

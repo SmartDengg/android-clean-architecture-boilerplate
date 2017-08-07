@@ -1,10 +1,11 @@
 package architecture.domain;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import android.support.annotation.CheckResult;
+import android.support.annotation.Nullable;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableTransformer;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * 创建时间:  2017/06/19 18:49 <br>
@@ -13,18 +14,29 @@ import rx.subscriptions.CompositeSubscription;
  */
 public abstract class UseCase<Request extends KeyRequest, Response> {
 
-  private CompositeSubscription subscriptions = new CompositeSubscription();
+  private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-  public void subscribe(final Request request, Observer<Response> useCaseSubscriber) {
+  private final Executor<Response> executor;
 
-    final Subscription subscription =
-        this.interactor(request).subscribeOn(Schedulers.io()).subscribe(useCaseSubscriber);
-    subscriptions.add(subscription);
+  protected UseCase(Executor<Response> executor) {
+    this.executor = executor;
   }
 
-  protected abstract Observable<Response> interactor(Request request);
+  public void subscribe(final Request request, DisposableSubscriber<Response> useCaseSubscriber) {
+
+    final DisposableSubscriber<Response> disposableSubscriber =
+        this.interactor(request).compose(executor.transformer()).subscribeWith(useCaseSubscriber);
+
+    compositeDisposable.add(disposableSubscriber);
+  }
+
+  @CheckResult protected abstract Flowable<Response> interactor(@Nullable Request request);
 
   public void unsubscribe() {
-    if (!subscriptions.hasSubscriptions()) subscriptions.clear();
+    if (!compositeDisposable.isDisposed()) compositeDisposable.dispose();
+  }
+
+  public interface Executor<Response> {
+    FlowableTransformer<Response, Response> transformer();
   }
 }
