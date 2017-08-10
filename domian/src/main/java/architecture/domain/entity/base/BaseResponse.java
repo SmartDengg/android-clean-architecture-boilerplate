@@ -1,4 +1,4 @@
-package architecture.domain.response.base;
+package architecture.domain.entity.base;
 
 import io.reactivex.Flowable;
 

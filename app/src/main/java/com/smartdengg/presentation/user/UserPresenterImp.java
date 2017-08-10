@@ -2,11 +2,10 @@ package com.smartdengg.presentation.user;
 
 import architecture.domain.UseCase;
 import architecture.domain.WebServiceException;
-import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.interactor.UserUseCase;
+import architecture.domain.entity.UserDetailEntity;
 import architecture.model.service.UserService;
 import com.smartdengg.presentation.IoExecutor;
-import io.reactivex.Flowable;
 import io.reactivex.subscribers.DisposableSubscriber;
 import java.util.List;
 
@@ -16,13 +15,13 @@ import java.util.List;
  * 描述:
  */
 public class UserPresenterImp
-    implements UserContract.Presenter<UserUseCase.Request, List<UserDetailEntity>> {
+    implements UserContract.Presenter<UserUseCase.Request, List<UserDetailModel>> {
 
-  private UserContract.View<List<UserDetailEntity>> view;
+  private UserContract.View<List<UserDetailModel>> view;
 
   private UseCase<UserUseCase.Request, List<UserDetailEntity>> userUseCase;
 
-  static UserContract.Presenter<UserUseCase.Request, List<UserDetailEntity>> create() {
+  static UserContract.Presenter<UserUseCase.Request, List<UserDetailModel>> create() {
     return new UserPresenterImp();
   }
 
@@ -33,7 +32,7 @@ public class UserPresenterImp
     this.userUseCase = new UserUseCase(userRepository, executor);
   }
 
-  @Override public void attachView(UserContract.View<List<UserDetailEntity>> view) {
+  @Override public void attachView(UserContract.View<List<UserDetailModel>> view) {
     this.view = view;
   }
 
@@ -62,8 +61,8 @@ public class UserPresenterImp
     @Override public void onComplete() {
     }
 
-    @Override public void onNext(List<UserDetailEntity> userEntities) {
-      view.showData(Flowable.just(userEntities));
+    @Override public void onNext(List<UserDetailEntity> detailResponses) {
+      view.showData(UserConverter.convertDetail(detailResponses));
     }
   }
 }

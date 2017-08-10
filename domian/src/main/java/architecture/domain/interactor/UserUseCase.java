@@ -2,14 +2,12 @@ package architecture.domain.interactor;
 
 import architecture.domain.KeyRequest;
 import architecture.domain.UseCase;
-import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.repository.UserRepository;
-import architecture.domain.response.UserDetailResponse;
-import architecture.domain.response.UserIdsResponse;
+import architecture.domain.entity.UserDetailEntity;
+import architecture.domain.entity.UserIdsEntity;
 import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
-import java.util.ArrayList;
 import java.util.List;
 import org.reactivestreams.Publisher;
 
@@ -29,30 +27,16 @@ public class UserUseCase extends UseCase<UserUseCase.Request, List<UserDetailEnt
 
   @Override protected Flowable<List<UserDetailEntity>> interactor(UserUseCase.Request request) {
     return userRepository.getUserResponse(request)
-        .concatMap(new Function<UserIdsResponse, Publisher<Integer>>() {
-          @Override public Publisher<Integer> apply(@NonNull UserIdsResponse userIdsResponse)
+        .concatMap(new Function<UserIdsEntity, Publisher<Integer>>() {
+          @Override public Publisher<Integer> apply(@NonNull UserIdsEntity userIdsEntity)
               throws Exception {
-            return Flowable.fromIterable(userIdsResponse.ids);
+            return Flowable.fromIterable(userIdsEntity.ids);
           }
         })
-        .concatMap(new Function<Integer, Publisher<List<UserDetailResponse>>>() {
-          @Override public Publisher<List<UserDetailResponse>> apply(@NonNull Integer id)
+        .concatMap(new Function<Integer, Publisher<List<UserDetailEntity>>>() {
+          @Override public Publisher<List<UserDetailEntity>> apply(@NonNull Integer id)
               throws Exception {
             return userRepository.getDetailResponse(Request.createWithId(id));
-          }
-        })
-        .concatMap(new Function<List<UserDetailResponse>, Publisher<List<UserDetailEntity>>>() {
-          @Override public Publisher<List<UserDetailEntity>> apply(
-              @NonNull List<UserDetailResponse> userDetailResponses) throws Exception {
-
-            List<UserDetailEntity> userEntities = new ArrayList<>(userDetailResponses.size());
-            for (UserDetailResponse detailResponse : userDetailResponses) {
-              UserDetailEntity userDetailEntity = new UserDetailEntity();
-              userDetailEntity.name = detailResponse.name;
-              userDetailEntity.address = detailResponse.address;
-              userEntities.add(userDetailEntity);
-            }
-            return Flowable.just(userEntities);
           }
         });
   }
