@@ -15,7 +15,7 @@ This code repository is only part of the article's example,
 and demonstrates how to use **Clean Architecture** in Android. 
 It does not run independently, it's just a code example, so you have to understand it by reading the article.
 
-Blog address on the jianshu: [《Clean architecture on Android》](s).
+Blog address on the jianshu: [《Clean architecture on Android》](http://www.jianshu.com/p/3edcf85539a6).
 
 
 [Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
