@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -25,7 +25,7 @@ public class ServiceGenerator {
         .create();
 
     retrofit = new Retrofit.Builder().baseUrl("BASE_URL")
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.createAsync())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(ServiceGenerator.httpClientBuilder.build())
         .build();
