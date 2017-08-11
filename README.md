@@ -35,7 +35,7 @@ Technical points
 ![Android Clean architecture data stream](http://upload-images.jianshu.io/upload_images/268450-a1bb51d5425f7fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-![Android Clean architecture UML](http://upload-images.jianshu.io/upload_images/268450-9ef0e97854311f9a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Android clean architecture UML](http://upload-images.jianshu.io/upload_images/268450-9d20a2155b67140d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 Found this project useful
