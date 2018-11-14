@@ -28,15 +28,17 @@ Blog address on the jianshu: [《Clean architecture on Android》](http://www.ji
 
 Technical points
 -------------
+
 ![Android Clean architecture modules](http://upload-images.jianshu.io/upload_images/268450-85bbb35b7a68f931.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
+----
 ![Android Clean architecture structure](http://upload-images.jianshu.io/upload_images/268450-eac22cae6f8ab4b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
+----
 ![Android Clean architecture data stream](http://upload-images.jianshu.io/upload_images/268450-a1bb51d5425f7fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-
+----
 ![Android clean architecture UML](http://upload-images.jianshu.io/upload_images/268450-9d20a2155b67140d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
