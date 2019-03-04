@@ -1,4 +1,4 @@
-EasyAndroidCleanArchitecture
+Android Clean Architecture Boilerplate
 -------------
 
 ![](http://upload-images.jianshu.io/upload_images/268450-05e4b56e3a54d170.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
