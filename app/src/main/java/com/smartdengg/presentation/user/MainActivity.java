@@ -16,8 +16,12 @@ public class MainActivity extends AppCompatActivity
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    this.presenter.attach(MainActivity.this);
+    this.presenter.load(UserUseCase.Request.createWithKey("this is the access key"));
+  }
 
-    this.presenter.fetchData(UserUseCase.Request.createWithKey("this is the access key"));
+  @Override public void showProgress() {
+    /*show progress*/
   }
 
   @Override public void showData(Flowable<List<UserDetailModel>> data) {
@@ -28,7 +32,12 @@ public class MainActivity extends AppCompatActivity
     /*show error message and hide progress*/
   }
 
-  @Override public void showProgress() {
-    /*show progress*/
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    this.presenter.detach();
+  }
+
+  @Override public String getPackageName() {
+    return getPackageName();
   }
 }

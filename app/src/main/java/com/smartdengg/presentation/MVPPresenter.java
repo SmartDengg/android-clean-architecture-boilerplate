@@ -7,7 +7,7 @@ package com.smartdengg.presentation;
  */
 public interface MVPPresenter<V> {
 
-  void attachView(V view);
+  void attach(V view);
 
-  void detachView();
+  void detach();
 }

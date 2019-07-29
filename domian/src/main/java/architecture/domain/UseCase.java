@@ -22,7 +22,7 @@ public abstract class UseCase<Request extends KeyRequest, Response> {
     this.executor = executor;
   }
 
-  public void subscribe(final Request request, DisposableSubscriber<Response> useCaseSubscriber) {
+  public void fetch(final Request request, DisposableSubscriber<Response> useCaseSubscriber) {
 
     final DisposableSubscriber<Response> disposableSubscriber =
         this.interactor(request).compose(executor.transformer()).subscribeWith(useCaseSubscriber);
@@ -32,7 +32,7 @@ public abstract class UseCase<Request extends KeyRequest, Response> {
 
   @CheckResult protected abstract Flowable<Response> interactor(@Nullable Request request);
 
-  public void unsubscribe() {
+  public void release() {
     if (!compositeDisposable.isDisposed()) compositeDisposable.dispose();
   }
 

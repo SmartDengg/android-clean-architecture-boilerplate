@@ -9,6 +9,8 @@ import io.reactivex.Flowable;
  */
 public interface MVPView<T> {
 
+  void showProgress();
+
   void showData(Flowable<T> data);
 
   void showError(String errorMessage);

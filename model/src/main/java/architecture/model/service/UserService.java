@@ -1,11 +1,11 @@
 package architecture.model.service;
 
-import architecture.domain.interactor.UserUseCase;
-import architecture.domain.repository.UserRepository;
 import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.entity.UserIdsEntity;
 import architecture.domain.entity.base.ResponseListPojo;
 import architecture.domain.entity.base.ResponsePojo;
+import architecture.domain.interactor.UserUseCase;
+import architecture.domain.repository.UserRepository;
 import architecture.model.generator.ServiceGenerator;
 import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
@@ -42,17 +42,15 @@ public class UserService implements UserRepository {
 
   @Override public Flowable<UserIdsEntity> getUserResponse(UserUseCase.Request request) {
     return service.getUser(request.key)
-        .concatMap(
-            new Function<ResponsePojo<UserIdsEntity>, Publisher<? extends UserIdsEntity>>() {
-              @Override public Publisher<? extends UserIdsEntity> apply(
-                  @NonNull ResponsePojo<UserIdsEntity> responsePojo) throws Exception {
-                return responsePojo.filterWebServiceErrors();
-              }
-            });
+        .concatMap(new Function<ResponsePojo<UserIdsEntity>, Publisher<? extends UserIdsEntity>>() {
+          @Override public Publisher<? extends UserIdsEntity> apply(
+              @NonNull ResponsePojo<UserIdsEntity> responsePojo) throws Exception {
+            return responsePojo.filterWebServiceErrors();
+          }
+        });
   }
 
-  @Override
-  public Flowable<List<UserDetailEntity>> getDetailResponse(UserUseCase.Request request) {
+  @Override public Flowable<List<UserDetailEntity>> getDetailResponse(UserUseCase.Request request) {
     return service.getUserList(request.id)
         .concatMap(
             new Function<ResponseListPojo<UserDetailEntity>, Publisher<? extends List<UserDetailEntity>>>() {

@@ -2,8 +2,8 @@ package com.smartdengg.presentation.user;
 
 import architecture.domain.UseCase;
 import architecture.domain.WebServiceException;
-import architecture.domain.interactor.UserUseCase;
 import architecture.domain.entity.UserDetailEntity;
+import architecture.domain.interactor.UserUseCase;
 import architecture.model.service.UserService;
 import com.smartdengg.presentation.IoExecutor;
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -26,25 +26,29 @@ public class UserPresenterImp
   }
 
   private UserPresenterImp() {
-
-    final UserService userRepository = UserService.create();
-    final UserUseCase.Executor<List<UserDetailEntity>> executor = IoExecutor.create();
-    this.userUseCase = new UserUseCase(userRepository, executor);
+    this.userUseCase =
+        new UserUseCase(UserService.create(), IoExecutor.<List<UserDetailEntity>>create());
   }
 
-  @Override public void attachView(UserContract.View<List<UserDetailModel>> view) {
+  @Override public void attach(UserContract.View<List<UserDetailModel>> view) {
     this.view = view;
   }
 
-  @Override public void detachView() {
-    userUseCase.unsubscribe();
+  @Override public void detach() {
+    userUseCase.release();
   }
 
-  @Override public void fetchData(UserUseCase.Request request) {
-    userUseCase.subscribe(request, new InnerSubscriber());
+  @Override public void load(UserUseCase.Request request) {
+    userUseCase.fetch(request, new InnerSubscriber(view));
   }
 
-  private final class InnerSubscriber extends DisposableSubscriber<List<UserDetailEntity>> {
+  private final static class InnerSubscriber extends DisposableSubscriber<List<UserDetailEntity>> {
+
+    private UserContract.View<List<UserDetailModel>> view;
+
+    InnerSubscriber(UserContract.View<List<UserDetailModel>> view) {
+      this.view = view;
+    }
 
     @Override public void onStart() {
       view.showProgress();

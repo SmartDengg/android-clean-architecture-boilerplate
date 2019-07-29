@@ -11,11 +11,11 @@ import com.smartdengg.presentation.MVPView;
 interface UserContract {
 
   interface Presenter<Request, Result> extends MVPPresenter<View<Result>> {
-    void fetchData(Request request);
+    void load(Request request);
   }
 
   interface View<Result> extends MVPView<Result> {
-
-    void showProgress();
+    // Android platform
+    String getPackageName();
   }
 }

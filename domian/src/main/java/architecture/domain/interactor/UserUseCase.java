@@ -2,9 +2,9 @@ package architecture.domain.interactor;
 
 import architecture.domain.KeyRequest;
 import architecture.domain.UseCase;
-import architecture.domain.repository.UserRepository;
 import architecture.domain.entity.UserDetailEntity;
 import architecture.domain.entity.UserIdsEntity;
+import architecture.domain.repository.UserRepository;
 import io.reactivex.Flowable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -28,14 +28,12 @@ public class UserUseCase extends UseCase<UserUseCase.Request, List<UserDetailEnt
   @Override protected Flowable<List<UserDetailEntity>> interactor(UserUseCase.Request request) {
     return userRepository.getUserResponse(request)
         .concatMap(new Function<UserIdsEntity, Publisher<Integer>>() {
-          @Override public Publisher<Integer> apply(@NonNull UserIdsEntity userIdsEntity)
-              throws Exception {
+          @Override public Publisher<Integer> apply(@NonNull UserIdsEntity userIdsEntity) {
             return Flowable.fromIterable(userIdsEntity.ids);
           }
         })
         .concatMap(new Function<Integer, Publisher<List<UserDetailEntity>>>() {
-          @Override public Publisher<List<UserDetailEntity>> apply(@NonNull Integer id)
-              throws Exception {
+          @Override public Publisher<List<UserDetailEntity>> apply(@NonNull Integer id) {
             return userRepository.getDetailResponse(Request.createWithId(id));
           }
         });
