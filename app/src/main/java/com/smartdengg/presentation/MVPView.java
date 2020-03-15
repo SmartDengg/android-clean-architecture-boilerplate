@@ -9,7 +9,7 @@ import io.reactivex.Flowable;
  */
 public interface MVPView<T> {
 
-  void showProgress();
+  void setLoadingProgress(boolean active);
 
   void showData(Flowable<T> data);
 

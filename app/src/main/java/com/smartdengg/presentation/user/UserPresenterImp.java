@@ -14,20 +14,18 @@ import java.util.List;
  * 作者:  SmartDengg <br>
  * 描述:
  */
-public class UserPresenterImp
-    implements UserContract.Presenter<UserUseCase.Request, List<UserDetailModel>> {
+public class UserPresenterImp implements UserContract.Presenter<List<UserDetailModel>> {
 
   private UserContract.View<List<UserDetailModel>> view;
-
   private UseCase<UserUseCase.Request, List<UserDetailEntity>> userUseCase;
-
-  static UserContract.Presenter<UserUseCase.Request, List<UserDetailModel>> create() {
-    return new UserPresenterImp();
-  }
 
   private UserPresenterImp() {
     this.userUseCase =
         new UserUseCase(UserService.create(), IoExecutor.<List<UserDetailEntity>>create());
+  }
+
+  static UserContract.Presenter<List<UserDetailModel>> create() {
+    return new UserPresenterImp();
   }
 
   @Override public void attach(UserContract.View<List<UserDetailModel>> view) {
@@ -38,8 +36,9 @@ public class UserPresenterImp
     userUseCase.release();
   }
 
-  @Override public void load(UserUseCase.Request request) {
-    userUseCase.fetch(request, new InnerSubscriber(view));
+  @Override public void loadData() {
+    userUseCase.fetch(UserUseCase.Request.createWithKey("this is the access key"),
+        new InnerSubscriber(view));
   }
 
   private final static class InnerSubscriber extends DisposableSubscriber<List<UserDetailEntity>> {
@@ -51,10 +50,11 @@ public class UserPresenterImp
     }
 
     @Override public void onStart() {
-      view.showProgress();
+      view.setLoadingProgress(true);
     }
 
     @Override public void onError(Throwable e) {
+      view.setLoadingProgress(false);
       if (e instanceof WebServiceException) {
         view.showError(e.getMessage());
       } else {
@@ -66,6 +66,7 @@ public class UserPresenterImp
     }
 
     @Override public void onNext(List<UserDetailEntity> detailResponses) {
+      view.setLoadingProgress(false);
       view.showData(UserConverter.convertDetail(detailResponses));
     }
   }

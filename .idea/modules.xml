@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SmartDengg_AndroidCleanArchitectureBoilerplate.iml" filepath="$PROJECT_DIR$/SmartDengg_AndroidCleanArchitectureBoilerplate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartDengg_AndroidCleanArchitectureBoilerplate.iml" filepath="$PROJECT_DIR$/SmartDengg_AndroidCleanArchitectureBoilerplate.iml" group="SmartDengg_AndroidCleanArchitectureBoilerplate" />
       <module fileurl="file://$PROJECT_DIR$/SmartDengg_PerformanceCleanArchitecture.iml" filepath="$PROJECT_DIR$/SmartDengg_PerformanceCleanArchitecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/domian/domian.iml" filepath="$PROJECT_DIR$/domian/domian.iml" />
-      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SmartDengg_AndroidCleanArchitectureBoilerplate/app" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" group="SmartDengg_AndroidCleanArchitectureBoilerplate/common" />
+      <module fileurl="file://$PROJECT_DIR$/domian/domian.iml" filepath="$PROJECT_DIR$/domian/domian.iml" group="SmartDengg_AndroidCleanArchitectureBoilerplate/domian" />
+      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" group="SmartDengg_AndroidCleanArchitectureBoilerplate/model" />
     </modules>
   </component>
 </project>

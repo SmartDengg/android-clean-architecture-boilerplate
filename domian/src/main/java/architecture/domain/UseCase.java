@@ -14,9 +14,8 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public abstract class UseCase<Request extends KeyRequest, Response> {
 
-  private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
   private final Executor<Response> executor;
+  private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
   protected UseCase(Executor<Response> executor) {
     this.executor = executor;

@@ -2,7 +2,6 @@ package com.smartdengg.presentation.user;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import architecture.domain.interactor.UserUseCase;
 import com.smartdengg.presentation.R;
 import io.reactivex.Flowable;
 import java.util.List;
@@ -10,17 +9,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
     implements UserContract.View<List<UserDetailModel>> {
 
-  private UserContract.Presenter<UserUseCase.Request, List<UserDetailModel>> presenter =
+  private UserContract.Presenter<List<UserDetailModel>> presenter =
       UserPresenterImp.create();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     this.presenter.attach(MainActivity.this);
-    this.presenter.load(UserUseCase.Request.createWithKey("this is the access key"));
+    this.presenter.loadData();
   }
 
-  @Override public void showProgress() {
+  @Override public void setLoadingProgress(boolean active) {
     /*show progress*/
   }
 
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     this.presenter.detach();
   }
 
-  @Override public String getPackageName() {
-    return getPackageName();
+  @Override public int getPageId() {
+    return 1;
   }
 }

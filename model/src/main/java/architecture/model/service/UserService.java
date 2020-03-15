@@ -36,7 +36,7 @@ public class UserService implements UserRepository {
     this.service = ServiceGenerator.createService(InternalService.class);
   }
 
-  public static UserService create() {
+  public static UserRepository create() {
     return new UserService();
   }
 
